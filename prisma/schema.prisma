@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Status {
+  SUCCESS
+  DANGER
+  INROUT
+  WARNING
+}
+
+model User {
+  id       String @id @default(cuid())
+  name     String
+  email    String @unique
+  password String
+  role     Role?  @default(USER)
+}
+
+model Sales {
+  id        String    @id @default(cuid())
+  product   Product[]
+  address   Address   @relation(fields: [addressId], references: [id])
+  addressId String
+  status    Status @default(WARNING)
+  total     Int
+}
+
+model Address {
+  id         String  @id @default(cuid())
+  street     String
+  number     String
+  district   String
+  complement String?
+  code       String
+  Sales      Sales[]
+}
+
+model Product {
+  id          String  @id @default(cuid())
+  name        String
+  description String
+  quantity    String
+  price       String
+  Sales       Sales?  @relation(fields: [salesId], references: [id])
+  salesId     String?
+}
