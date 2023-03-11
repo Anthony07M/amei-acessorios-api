@@ -11,10 +11,4 @@ export class AuthController {
   async login(@Body() data): Promise<any> {
     return this.authService.login(data);
   }
-
-  @UseGuards(AuthGuard('jwt'))
-  @Get('profile')
-  async profile(): Promise<any> {
-    return { like: 'ok' };
-  }
 }

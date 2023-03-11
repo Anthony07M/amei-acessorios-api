@@ -4,8 +4,9 @@ CREATE TABLE `User` (
     `name` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
-    `role` ENUM('ADMIN', 'USER') NULL DEFAULT 'USER',
+    `role` ENUM('ADMIN', 'COLLABORATOR', 'MOTOBOY') NULL DEFAULT 'COLLABORATOR',
 
+    UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -14,7 +15,7 @@ CREATE TABLE `Sales` (
     `id` VARCHAR(191) NOT NULL,
     `addressId` VARCHAR(191) NOT NULL,
     `status` ENUM('SUCCESS', 'DANGER', 'INROUT', 'WARNING') NOT NULL DEFAULT 'WARNING',
-    `total` INTEGER NOT NULL,
+    `total` DOUBLE NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -36,8 +37,8 @@ CREATE TABLE `Product` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
-    `quantity` VARCHAR(191) NOT NULL,
-    `price` VARCHAR(191) NOT NULL,
+    `quantity` INTEGER NOT NULL,
+    `price` DOUBLE NOT NULL,
     `salesId` VARCHAR(191) NULL,
 
     PRIMARY KEY (`id`)

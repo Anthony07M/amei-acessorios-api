@@ -27,14 +27,6 @@ export class UsersController {
     return user;
   }
 
-  @HttpCode(204)
-  @Delete(':id')
-  async delete(@Param('id') id): Promise<any> {
-    const result = await this.usersService.delte(id);
-    console.log('result ', result);
-    return;
-  }
-
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(@UploadedFile() file: Express.Multer.File) {

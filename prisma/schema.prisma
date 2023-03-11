@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,10 +6,10 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-
 enum Role {
   ADMIN
-  USER
+  COLLABORATOR
+  MOTOBOY
 }
 
 enum Status {
@@ -27,8 +24,9 @@ model User {
   name     String
   email    String @unique
   password String
-  role     Role?  @default(USER)
+  role Role? @default(COLLABORATOR)
 }
+
 
 model Sales {
   id        String    @id @default(cuid())
@@ -36,7 +34,7 @@ model Sales {
   address   Address   @relation(fields: [addressId], references: [id])
   addressId String
   status    Status @default(WARNING)
-  total     Int
+  total     Float
 }
 
 model Address {
@@ -53,8 +51,8 @@ model Product {
   id          String  @id @default(cuid())
   name        String
   description String
-  quantity    String
-  price       String
+  quantity    Int
+  price       Float
   Sales       Sales?  @relation(fields: [salesId], references: [id])
   salesId     String?
 }
